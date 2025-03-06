@@ -20,7 +20,7 @@ app.post('/events', async (req, res) => {
     const timestamp = new Date().toISOString();
 
     const params = {
-        TableName: process.env.EVENTS_TABLE,
+        TableName: "${target_table}",
         Item: {
             id: uuid.v4(),
             principalId: principalId,
