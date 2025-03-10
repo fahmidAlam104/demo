@@ -21,12 +21,6 @@ export const handler = async (event) => {
     throw error;
   }
 };
-
-/**
- * Process individual DynamoDB Stream record
- * @param {Object} record - DynamoDB Stream record
- * @returns {Promise} - Promise from DynamoDB put operation
- */
 async function processRecord(record) {
   const eventName = record.eventName;
   const dynamodbRecord = record.dynamodb;
