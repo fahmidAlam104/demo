@@ -13,7 +13,9 @@
     "target_rule": "uuid_trigger",
     "resource_type": "cloudwatch_rule_trigger"
   }],
-  "env_variables": { "S3_BUCKET_NAME": "${target_bucket}"},
+  "env_variables": {
+    "S3_BUCKET_NAME": "${target_bucket}"
+  },
   "publish_version": true,
   "alias": "${lambdas_alias_name}",
   "url_config": {},

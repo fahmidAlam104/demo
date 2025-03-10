@@ -6,6 +6,7 @@
       "lambda-basic-execution"
     ],
     "resource_type": "iam_role",
+    "allowed_account": "376129861747",
     "tags": {}
   }
 }
