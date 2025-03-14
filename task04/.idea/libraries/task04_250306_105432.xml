@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="task04_250306.105432">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.syndicate-config-dev/bundles/task04_250306.105432/sqs_handler-1.0.zip!/" />
+      <root url="jar://$PROJECT_DIR$/.syndicate-config-dev/bundles/task04_250306.105432/sns_handler-1.0.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
