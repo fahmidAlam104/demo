@@ -58,7 +58,6 @@
     "username_attributes": [],
     "custom_attributes": [],
     "client": {
-      "enable_proxy": true,
       "client_name": "client-app",
       "generate_secret": false,
       "explicit_auth_flows": [
@@ -91,7 +90,8 @@
           "integration_request_body_template": {},
           "responses": [],
           "integration_responses": [],
-          "default_error_pattern": true
+          "default_error_pattern": true,
+          "enable_proxy": true
         }
       },
       "/signup": {
