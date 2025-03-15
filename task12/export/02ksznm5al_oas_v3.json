@@ -17,6 +17,8 @@
   "paths": {
     "/reservations": {
       "get": {
+        "summary": "Get Reservations",
+        "description": "Fetches a list of all reservations.",
         "responses": {
           "200": {
             "description": "200 response",
@@ -57,6 +59,39 @@
         }
       },
       "post": {
+        "summary": "Create Reservation",
+        "description": "Creates a new reservation by submitting required information.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "time": {
+                    "type": "string"
+                  },
+                  "people_count": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "date",
+                  "time",
+                  "people_count"
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "200 response",
@@ -82,7 +117,6 @@
           }
         ],
         "x-amazon-apigateway-integration": {
-          "type": "aws_proxy",
           "httpMethod": "POST",
           "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:376129861747:function:api_handler/invocations",
           "responses": {
@@ -93,10 +127,13 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
         }
       },
       "options": {
+        "summary": "CORS Preflight",
+        "description": "Handles CORS preflight requests to allow cross-origin requests.",
         "responses": {
           "200": {
             "description": "200 response",
@@ -127,7 +164,6 @@
           }
         },
         "x-amazon-apigateway-integration": {
-          "type": "mock",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -141,12 +177,15 @@
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     },
     "/tables": {
       "get": {
+        "summary": "Get Tables",
+        "description": "Fetches a list of all tables.",
         "responses": {
           "200": {
             "description": "200 response",
@@ -172,7 +211,6 @@
           }
         ],
         "x-amazon-apigateway-integration": {
-          "type": "aws_proxy",
           "httpMethod": "POST",
           "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:376129861747:function:api_handler/invocations",
           "responses": {
@@ -183,10 +221,38 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
         }
       },
       "post": {
+        "summary": "Create Table",
+        "description": "Creates a new table by submitting required information.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "table_number": {
+                    "type": "integer"
+                  },
+                  "capacity": {
+                    "type": "integer"
+                  },
+                  "location": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "table_number",
+                  "capacity"
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "200 response",
@@ -212,7 +278,6 @@
           }
         ],
         "x-amazon-apigateway-integration": {
-          "type": "aws_proxy",
           "httpMethod": "POST",
           "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:376129861747:function:api_handler/invocations",
           "responses": {
@@ -223,10 +288,13 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
         }
       },
       "options": {
+        "summary": "CORS Preflight",
+        "description": "Handles CORS preflight requests to allow cross-origin requests for tables.",
         "responses": {
           "200": {
             "description": "200 response",
@@ -257,7 +325,6 @@
           }
         },
         "x-amazon-apigateway-integration": {
-          "type": "mock",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -271,12 +338,37 @@
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     },
     "/signin": {
       "post": {
+        "summary": "User Sign In",
+        "description": "Signs in a user by verifying credentials.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "200 response",
@@ -294,10 +386,26 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized, invalid credentials",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "x-amazon-apigateway-integration": {
-          "type": "aws_proxy",
           "httpMethod": "POST",
           "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:376129861747:function:api_handler/invocations",
           "responses": {
@@ -308,10 +416,13 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
         }
       },
       "options": {
+        "summary": "CORS Preflight",
+        "description": "Handles CORS preflight requests to allow cross-origin requests for the sign-in endpoint.",
         "responses": {
           "200": {
             "description": "200 response",
@@ -342,7 +453,6 @@
           }
         },
         "x-amazon-apigateway-integration": {
-          "type": "mock",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -356,12 +466,42 @@
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     },
     "/signup": {
       "post": {
+        "summary": "User Sign Up",
+        "description": "Registers a new user by creating a new account with provided details.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "200 response",
@@ -379,10 +519,26 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request, validation error",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "x-amazon-apigateway-integration": {
-          "type": "aws_proxy",
           "httpMethod": "POST",
           "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:376129861747:function:api_handler/invocations",
           "responses": {
@@ -393,10 +549,13 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
         }
       },
       "options": {
+        "summary": "CORS Preflight",
+        "description": "Handles CORS preflight requests to allow cross-origin requests for the signup endpoint.",
         "responses": {
           "200": {
             "description": "200 response",
@@ -427,7 +586,6 @@
           }
         },
         "x-amazon-apigateway-integration": {
-          "type": "mock",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -441,12 +599,15 @@
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     },
     "/tables/{tableId}": {
       "get": {
+        "summary": "Get Table Details",
+        "description": "Fetches details of a specific table based on the given `tableId`.",
         "parameters": [
           {
             "name": "tableId",
@@ -454,7 +615,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The unique identifier for the table."
           }
         ],
         "responses": {
@@ -471,6 +633,23 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Table not found",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -482,7 +661,6 @@
           }
         ],
         "x-amazon-apigateway-integration": {
-          "type": "aws_proxy",
           "httpMethod": "POST",
           "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:376129861747:function:api_handler/invocations",
           "responses": {
@@ -493,10 +671,13 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "aws_proxy"
         }
       },
       "options": {
+        "summary": "CORS Preflight",
+        "description": "Handles CORS preflight requests to allow cross-origin requests for the tables endpoint.",
         "parameters": [
           {
             "name": "tableId",
@@ -504,7 +685,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The unique identifier for the table."
           }
         ],
         "responses": {
@@ -537,7 +719,6 @@
           }
         },
         "x-amazon-apigateway-integration": {
-          "type": "mock",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -551,7 +732,8 @@
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match"
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     }
